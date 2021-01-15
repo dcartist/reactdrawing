@@ -11,16 +11,25 @@ const styles = {
 class Canvas extends Component {
     constructor(props) {
         super(props);
-     
+        this.state={
+          brushSize: 50,
+        }
         this.canvas = React.createRef();
       }
+  brushSizeChange(number){
+    this.setState({brushSize:parseInt(number)})
+
+  }
     render() {
         return (
           <div>
+            <button onClick={() =>this.brushSizeChange(100)} className="p-2">100</button>
+            <button onClick={() =>this.brushSizeChange(50)} className="p-2">50</button>
+            <button onClick={() =>this.brushSizeChange(10)} className="p-2">10</button>
             <ReactSketchCanvas
             height="90vh" 
               ref={this.canvas}
-              strokeWidth={5}
+              strokeWidth={this.state.brushSize}
               strokeColor="black"
             />
             <button
