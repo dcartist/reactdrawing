@@ -58,7 +58,7 @@ class Canvas extends Component {
         <button onClick={() => this.brushSizeChange(1)} className="p-2 border-2 border-gray-400">1</button>
 
         <button
-          className="ml-4"
+          className="ml-4 disable-select"
           onClick={() => {
             this.canvas.current
               .exportSvg("svg")
