@@ -18,6 +18,7 @@ class Canvas extends Component {
     this.canvas = React.createRef();
   }
   brushSizeChange(number) {
+    this.canvas.current.eraseMode(false)
     this.setState({ brushSize: parseInt(number) })
 
   }
@@ -31,12 +32,17 @@ class Canvas extends Component {
         <button className="mr-4" onClick={() => {
           this.canvas.current.eraseMode(true)
         }}>
-          <Icon name='eraser' size='large' />
+          <Icon name='eraser' size="large" />
         </button>
         <button className="mr-4" onClick={() => {
           this.canvas.current.undo()
         }}>
-          <Icon name='undo' size='large' />
+          <Icon name='undo'/>
+        </button>
+        <button className="mr-4" onClick={() => {
+          this.canvas.current.redo()
+        }}>
+          <Icon name='redo' />
         </button>
         <button className="mr-4" onClick={() => {
           this.canvas.current.eraseMode(false)
