@@ -23,16 +23,14 @@ class Canvas extends Component {
     render() {
         return (
           <div>
-            <button onClick={() =>this.brushSizeChange(100)} className="p-2">100</button>
-            <button onClick={() =>this.brushSizeChange(50)} className="p-2">50</button>
-            <button onClick={() =>this.brushSizeChange(10)} className="p-2">10</button>
-            <ReactSketchCanvas
-            height="90vh" 
-              ref={this.canvas}
-              strokeWidth={this.state.brushSize}
-              strokeColor="black"
-            />
+            <button onClick={() =>this.brushSizeChange(100)} className="p-2 border-2 border-gray-400">100</button>
+            <button onClick={() =>this.brushSizeChange(50)} className="p-2 border-2 border-gray-400">50</button>
+            <button onClick={() =>this.brushSizeChange(10)} className="p-2 border-2 border-gray-400">10</button>
+            <button onClick={() =>this.brushSizeChange(5)} className="p-2 border-2 border-gray-400">5</button>
+            <button onClick={() =>this.brushSizeChange(1)} className="p-2 border-2 border-gray-400">1</button>
+
             <button
+            className="ml-4"
               onClick={() => {
                 this.canvas.current
                   .exportSvg("svg")
@@ -48,8 +46,16 @@ saveFile(file, 'drawing.svg');
                   });
               }}
             >
-              Get SVG
+              Save to SVG
             </button>
+
+            <ReactSketchCanvas
+            height="90vh" 
+              ref={this.canvas}
+              strokeWidth={this.state.brushSize}
+              strokeColor="black"
+            />
+            
             {/* <button className="p-2"
               onClick={() => {
                 this.canvas.current
