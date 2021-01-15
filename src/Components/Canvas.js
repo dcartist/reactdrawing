@@ -39,8 +39,26 @@ saveFile(file, 'drawing.svg');
                   });
               }}
             >
-              Get Image
+              Get SVG
             </button>
+            {/* <button className="p-2"
+              onClick={() => {
+                this.canvas.current
+                  .exportImage("png")
+                  .then(data => {
+                    console.log(data);
+                    console.log(typeof(data));
+                    let file = new File(data, {type: 'image/png'});
+saveFile(file, 'drawing.png');
+
+                  })
+                  .catch(e => {
+                    console.log(e);
+                  });
+              }}
+            >
+              Get Png
+            </button> */}
           </div>
         );
       }
