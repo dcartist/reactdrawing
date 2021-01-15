@@ -29,11 +29,7 @@ class Canvas extends Component {
         <button className="mr-4" onClick={() => {
           this.canvas.current.clearCanvas()
         }}>CLEAR!</button>
-        <button className="mr-4" onClick={() => {
-          this.canvas.current.eraseMode(true)
-        }}>
-          <Icon name='eraser' size="large" />
-        </button>
+        
         <button className="mr-4" onClick={() => {
           this.canvas.current.undo()
         }}>
@@ -45,8 +41,16 @@ class Canvas extends Component {
           <Icon name='redo' />
         </button>
         <button className="mr-4" onClick={() => {
+          this.canvas.current.eraseMode(true)
+        }}>
+          <Icon name='eraser' size="large" />
+        </button>
+        <button className="mr-4" onClick={() => {
           this.canvas.current.eraseMode(false)
-        }}>draw</button>
+        }}>
+          
+        <Icon name='pencil' size="large" /></button>
+      
         <button onClick={() => this.brushSizeChange(100)} className="p-2 border-2 border-gray-400">100</button>
         <button onClick={() => this.brushSizeChange(50)} className="p-2 border-2 border-gray-400">50</button>
         <button onClick={() => this.brushSizeChange(10)} className="p-2 border-2 border-gray-400">10</button>
