@@ -1,23 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
+import { ReactSketchCanvas } from "react-sketch-canvas";
+
+const styles = {
+  border: "0.0625rem solid #9c9c9c",
+  borderRadius: "0.25rem",
+};
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ReactSketchCanvas
+      style={styles}
+      width="600"
+      height="400"
+      strokeWidth={4}
+      strokeColor="red"
+    />
     </div>
   );
 }
