@@ -26,7 +26,10 @@ class Canvas extends Component {
     return (
       <div>
 
-        <button className="mr-4" onClick={() => {
+        <button className="mr-2" onClick={() => {
+          this.canvas.current.resetCanvas()
+        }}>New Canvas</button>
+        <button className="mr-2" onClick={() => {
           this.canvas.current.clearCanvas()
         }}>CLEAR!</button>
         
