@@ -14,6 +14,7 @@ class Canvas extends Component {
     super(props);
     this.state = {
       brushSize: 50,
+      color: "black"
     }
     this.canvas = React.createRef();
   }
@@ -22,11 +23,16 @@ class Canvas extends Component {
     this.setState({ brushSize: parseInt(number) })
 
   }
+ colorChange(name) {
+    this.canvas.current.eraseMode(false)
+    this.setState({ color: name })
+
+  }
   render() {
     return (
       <div>
-
-        <button className="mr-2" onClick={() => {
+<div>
+<button className="mr-2" onClick={() => {
           this.canvas.current.resetCanvas()
         }}>New Canvas</button>
         <button className="mr-2" onClick={() => {
@@ -79,12 +85,21 @@ class Canvas extends Component {
         >
           Save to SVG
             </button>
+</div>
+<div>
+<button className="bg-black p-5" onClick={() => this.colorChange('black')}></button>
+<button className="bg-red-600 p-5" onClick={() => this.colorChange('red')}></button>
+<button className="bg-yellow-400 p-5" onClick={() => this.colorChange('yellow')}></button>
+<button className="bg-white p-5" onClick={() => this.colorChange('white')}></button>
+<button className="bg-blue-700 p-5" onClick={() => this.colorChange('blue')}></button>
+</div>
+       
 
         <ReactSketchCanvas
           height="90vh"
           ref={this.canvas}
           strokeWidth={this.state.brushSize}
-          strokeColor="black"
+          strokeColor={this.state.color}
         />
 
         {/* <button className="p-2"
