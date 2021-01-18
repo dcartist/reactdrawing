@@ -87,11 +87,11 @@ class Canvas extends Component {
             </button>
 </div>
 <div>
-<button className="bg-black p-5" onClick={() => this.colorChange('black')}></button>
-<button className="bg-red-600 p-5" onClick={() => this.colorChange('red')}></button>
-<button className="bg-yellow-400 p-5" onClick={() => this.colorChange('yellow')}></button>
-<button className="bg-white p-5" onClick={() => this.colorChange('white')}></button>
-<button className="bg-blue-700 p-5" onClick={() => this.colorChange('blue')}></button>
+<button className="bg-black p-5 rounded-full border-black border" onClick={() => this.colorChange('black')}></button>
+<button className="bg-red-600 p-5 rounded-full border-black border" onClick={() => this.colorChange('red')}></button>
+<button className="bg-yellow-400 p-5 rounded-full border-black border" onClick={() => this.colorChange('yellow')}></button>
+<button className="bg-white p-5 rounded-full border-black border" onClick={() => this.colorChange('white')}></button>
+<button className="bg-blue-700 p-5 rounded-full border-black border" onClick={() => this.colorChange('blue')}></button>
 </div>
        
 
