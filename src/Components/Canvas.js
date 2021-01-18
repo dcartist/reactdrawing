@@ -32,39 +32,39 @@ class Canvas extends Component {
     return (
       <div>
 <div>
-<button className="mr-2" onClick={() => {
+<button className="mr-2 disable-select" onClick={() => {
           this.canvas.current.resetCanvas()
         }}>New Canvas</button>
-        <button className="mr-2" onClick={() => {
+        <button className="mr-2 disable-select" onClick={() => {
           this.canvas.current.clearCanvas()
         }}>CLEAR!</button>
         
-        <button className="mr-4" onClick={() => {
+        <button className="mr-4 disable-select" onClick={() => {
           this.canvas.current.undo()
         }}>
           <Icon name='undo'/>
         </button>
-        <button className="mr-4" onClick={() => {
+        <button className="mr-4 disable-select" onClick={() => {
           this.canvas.current.redo()
         }}>
           <Icon name='redo' />
         </button>
-        <button className="mr-4" onClick={() => {
+        <button className="mr-4 disable-select" onClick={() => {
           this.canvas.current.eraseMode(true)
         }}>
           <Icon name='eraser' size="large" />
         </button>
-        <button className="mr-4" onClick={() => {
+        <button className="mr-4 disable-select" onClick={() => {
           this.canvas.current.eraseMode(false)
         }}>
           
         <Icon name='pencil' size="large" /></button>
       
-        <button onClick={() => this.brushSizeChange(100)} className="p-2 border-2 border-gray-400">100</button>
-        <button onClick={() => this.brushSizeChange(50)} className="p-2 border-2 border-gray-400">50</button>
-        <button onClick={() => this.brushSizeChange(10)} className="p-2 border-2 border-gray-400">10</button>
-        <button onClick={() => this.brushSizeChange(5)} className="p-2 border-2 border-gray-400">5</button>
-        <button onClick={() => this.brushSizeChange(1)} className="p-2 border-2 border-gray-400">1</button>
+        <button onClick={() => this.brushSizeChange(100)} className="p-2 border-2 border-gray-400 disable-select">100</button>
+        <button onClick={() => this.brushSizeChange(50)} className="p-2 border-2 border-gray-400 disable-select">50</button>
+        <button onClick={() => this.brushSizeChange(10)} className="p-2 border-2 border-gray-400 disable-select">10</button>
+        <button onClick={() => this.brushSizeChange(5)} className="p-2 border-2 border-gray-400 disable-select">5</button>
+        <button onClick={() => this.brushSizeChange(1)} className="p-2 border-2 border-gray-400 disable-select">1</button>
 
         <button
           className="ml-4 disable-select"
