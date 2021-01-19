@@ -232,11 +232,15 @@ class Canvas extends Component {
           
 					<div className="flex"> Tints: {this.state.tints.map((color, index) => {
             let newclassname = ''
+            let divClassname = ''
             if (color.color == 'white')  
-            {newclassname = `bg-white p-6 border-black border`} else {
+            {newclassname = `bg-white p-6 border-black border`
+            divClassname = `bg-white m-1`
+          } else {
               newclassname = `bg-${this.state.originalColor}-${color.color} p-6 border-black border`
+              divClassname = `bg-${this.state.originalColor}-${color.color} m-1`
             }
-            return <div className="m-1" key={index}><button className={newclassname}
+            return <div className="m-1"key={index} style={{backgroundColor: color.val}}><button className={newclassname}
             onClick={() => this.tintChange(color.val)}
           /></div>
           })}</div>
