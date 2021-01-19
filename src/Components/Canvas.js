@@ -1,108 +1,255 @@
 import React, { Component } from 'react';
-import { ReactSketchCanvas } from "react-sketch-canvas";
+import { ReactSketchCanvas } from 'react-sketch-canvas';
 import saveFile from 'save-as-file';
-import 'semantic-ui-css/semantic.min.css'
+import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
 const styles = {
-  border: "0.0625rem solid #9c9c9c",
-  borderRadius: "0.25rem"
+	border: '0.0625rem solid #9c9c9c',
+	borderRadius: '0.25rem',
 };
 
-
 class Canvas extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      brushSize: 50,
-      color: "black"
-    }
-    this.canvas = React.createRef();
+	constructor(props) {
+		super(props);
+		this.state = {
+			brushSize: 50,
+      color: 'gray',
+      originalColor:'gray',
+			red: [
+				{ color: '700', val: 'rgba(153, 27, 27)' },
+				{ color: '600', val: 'rgba(220, 38, 38)'},
+				{ color: '400', val: 'rgba(248, 113, 113)'},
+				{ color: '200', val: 'rgba(254, 202, 202)'},
+			],
+			blue: [
+				{ color: '700', val: 'blue' },
+				{ color: '600', val: 'rgba(37, 99, 235)'},
+				{ color: '400', val: 'rgba(96, 165, 250)'},
+				{ color: '200', val: 'rgba(191, 219, 254)'},
+			],
+			yellow: [
+				{ color: '400', val: 'yellow' },
+				{ color: '300', val: 'rgba(252, 211, 77)' },
+				{ color: '200', val: 'rgba(253, 230, 138)' },
+				{ color: '100', val: 'rgba(254, 243, 199)' },
+			],
+			black: [
+				{ color: '900', val: 'black' },
+				{ color: '700', val: 'rgba(55, 65, 81)' },
+				{ color: '500', val: 'rgba(107, 114, 128)' },
+				{ color: '300', val: 'rgba(209, 213, 219)' },
+			],
+			gray: [
+				{ color: '900', val: 'black' },
+				{ color: '700', val: 'rgba(55, 65, 81)' },
+				{ color: '500', val: 'rgba(107, 114, 128)' },
+				{ color: '300', val: 'rgba(209, 213, 219)' },
+			],
+			white: [
+				{ color: 'white', val: 'white' },
+				{ color: '50', val: 'rgba(249, 250, 251)' },
+				{ color: '100', val: 'rgba(243, 244, 246)' },
+				{ color: '200', val: 'rgba(229, 231, 235)' },
+			],
+			tints: [
+				{ color: '900', val: 'black' },
+				{ color: '700', val: 'rgba(55, 65, 81)' },
+				{ color: '500', val: 'rgba(107, 114, 128)' },
+				{ color: '300', val: 'rgba(209, 213, 219)' },
+			],
+		};
+		this.canvas = React.createRef();
+	}
+	brushSizeChange(number) {
+		this.canvas.current.eraseMode(false);
+		this.setState({ brushSize: parseInt(number) });
+	}
+	colorChange(name) {
+    this.canvas.current.eraseMode(false);
+    switch(name){
+      case "blue":
+        this.setState({tints: this.state.blue})
+        this.setState({ color: name, originalColor:name });
+        break
+      case "red":
+        this.setState({tints: this.state.red})
+        this.setState({ color: name, originalColor:name });
+        break
+      case "yellow":
+        this.setState({tints: this.state.yellow})
+        this.setState({ color: name, originalColor:name });
+        break
+      case "white":
+        this.setState({tints: this.state.white})
+        this.setState({ color: 'white', originalColor:'gray' });
+        break
+      case "gray":
+        this.setState({tints: this.state.gray})
+        this.setState({ color: 'gray', originalColor:'gray' });
+        break
+      case "black":
+        this.setState({tints: this.state.black})
+        this.setState({ color: 'black', originalColor:'gray' });
+        break
+      default:
+      this.setState({ color: name });
+    }  
   }
-  brushSizeChange(number) {
-    this.canvas.current.eraseMode(false)
-    this.setState({ brushSize: parseInt(number) })
+  tintChange(name){
+    this.canvas.current.eraseMode(false);
+    this.setState({ color: name });
+  }
+	render() {
+		return (
+			<div>
+				<div>
+					<button
+						className="mr-2 disable-select"
+						onClick={() => {
+							this.canvas.current.resetCanvas();
+						}}
+					>
+						New Canvas
+					</button>
+					<button
+						className="mr-2 disable-select"
+						onClick={() => {
+							this.canvas.current.clearCanvas();
+						}}
+					>
+						CLEAR!
+					</button>
 
-  }
- colorChange(name) {
-    this.canvas.current.eraseMode(false)
-    this.setState({ color: name })
+					<button
+						className="mr-4 disable-select"
+						onClick={() => {
+							this.canvas.current.undo();
+						}}
+					>
+						<Icon name="undo" />
+					</button>
+					<button
+						className="mr-4 disable-select"
+						onClick={() => {
+							this.canvas.current.redo();
+						}}
+					>
+						<Icon name="redo" />
+					</button>
+					<button
+						className="mr-4 disable-select"
+						onClick={() => {
+							this.canvas.current.eraseMode(true);
+						}}
+					>
+						<Icon name="eraser" size="large" />
+					</button>
+					<button
+						className="mr-4 disable-select"
+						onClick={() => {
+							this.canvas.current.eraseMode(false);
+						}}
+					>
+						<Icon name="pencil" size="large" />
+					</button>
 
-  }
-  render() {
-    return (
-      <div>
-<div>
-<button className="mr-2 disable-select" onClick={() => {
-          this.canvas.current.resetCanvas()
-        }}>New Canvas</button>
-        <button className="mr-2 disable-select" onClick={() => {
-          this.canvas.current.clearCanvas()
-        }}>CLEAR!</button>
-        
-        <button className="mr-4 disable-select" onClick={() => {
-          this.canvas.current.undo()
-        }}>
-          <Icon name='undo'/>
-        </button>
-        <button className="mr-4 disable-select" onClick={() => {
-          this.canvas.current.redo()
-        }}>
-          <Icon name='redo' />
-        </button>
-        <button className="mr-4 disable-select" onClick={() => {
-          this.canvas.current.eraseMode(true)
-        }}>
-          <Icon name='eraser' size="large" />
-        </button>
-        <button className="mr-4 disable-select" onClick={() => {
-          this.canvas.current.eraseMode(false)
-        }}>
+					<button
+						onClick={() => this.brushSizeChange(100)}
+						className="p-2 border-2 border-gray-400 disable-select"
+					>
+						100
+					</button>
+					<button
+						onClick={() => this.brushSizeChange(50)}
+						className="p-2 border-2 border-gray-400 disable-select"
+					>
+						50
+					</button>
+					<button
+						onClick={() => this.brushSizeChange(10)}
+						className="p-2 border-2 border-gray-400 disable-select"
+					>
+						10
+					</button>
+					<button
+						onClick={() => this.brushSizeChange(5)}
+						className="p-2 border-2 border-gray-400 disable-select"
+					>
+						5
+					</button>
+					<button
+						onClick={() => this.brushSizeChange(1)}
+						className="p-2 border-2 border-gray-400 disable-select"
+					>
+						1
+					</button>
+
+					<button
+						className="ml-4 disable-select"
+						onClick={() => {
+							this.canvas.current
+								.exportSvg('svg')
+								.then((data) => {
+									console.log(data);
+									console.log(typeof data);
+									let file = new File([data], { type: 'image/svg+xml' });
+									saveFile(file, 'drawing.svg');
+								})
+								.catch((e) => {
+									console.log(e);
+								});
+						}}
+					>
+						Save to SVG
+					</button>
+				</div>
+				<section className="grid grid-cols-2">
+					<div>
+						<div>
+              Colors: 
+							<button
+								className="bg-black p-5 m-1 rounded-full border-black border"
+								onClick={() => this.colorChange('black')}
+							/>
+							<button
+								className="bg-red-600 p-5 m-1 rounded-full border-black border"
+								onClick={() => this.colorChange('red')}
+							/>
+							<button
+								className="bg-yellow-400 p-5 m-1 rounded-full border-black border"
+								onClick={() => this.colorChange('yellow')}
+							/>
+							<button
+								className="bg-white p-5 m-1 rounded-full border-black border"
+								onClick={() => this.colorChange('white')}
+							/>
+							<button
+								className="bg-blue-700 p-5 m-1 rounded-full border-black border"
+								onClick={() => this.colorChange('blue')}
+							/>
+						</div>
+					</div>
           
-        <Icon name='pencil' size="large" /></button>
-      
-        <button onClick={() => this.brushSizeChange(100)} className="p-2 border-2 border-gray-400 disable-select">100</button>
-        <button onClick={() => this.brushSizeChange(50)} className="p-2 border-2 border-gray-400 disable-select">50</button>
-        <button onClick={() => this.brushSizeChange(10)} className="p-2 border-2 border-gray-400 disable-select">10</button>
-        <button onClick={() => this.brushSizeChange(5)} className="p-2 border-2 border-gray-400 disable-select">5</button>
-        <button onClick={() => this.brushSizeChange(1)} className="p-2 border-2 border-gray-400 disable-select">1</button>
+					<div className="flex"> Tints: {this.state.tints.map((color, index) => {
+            let newclassname = ''
+            if (color.color == 'white')  
+            {newclassname = `bg-white p-6 border-black border`} else {
+              newclassname = `bg-${this.state.originalColor}-${color.color} p-6 border-black border`
+            }
+            return <div className="m-1" key={index}><button className={newclassname}
+            onClick={() => this.tintChange(color.val)}
+          /></div>
+          })}</div>
+				</section>
 
-        <button
-          className="ml-4 disable-select"
-          onClick={() => {
-            this.canvas.current
-              .exportSvg("svg")
-              .then(data => {
-                console.log(data);
-                console.log(typeof (data));
-                let file = new File([data], { type: 'image/svg+xml' });
-                saveFile(file, 'drawing.svg');
+				<ReactSketchCanvas
+					height="85vh"
+					ref={this.canvas}
+					strokeWidth={this.state.brushSize}
+					strokeColor={this.state.color}
+				/>
 
-              })
-              .catch(e => {
-                console.log(e);
-              });
-          }}
-        >
-          Save to SVG
-            </button>
-</div>
-<div>
-<button className="bg-black p-5 rounded-full border-black border" onClick={() => this.colorChange('black')}></button>
-<button className="bg-red-600 p-5 rounded-full border-black border" onClick={() => this.colorChange('red')}></button>
-<button className="bg-yellow-400 p-5 rounded-full border-black border" onClick={() => this.colorChange('yellow')}></button>
-<button className="bg-white p-5 rounded-full border-black border" onClick={() => this.colorChange('white')}></button>
-<button className="bg-blue-700 p-5 rounded-full border-black border" onClick={() => this.colorChange('blue')}></button>
-</div>
-       
-
-        <ReactSketchCanvas
-          height="85vh"
-          ref={this.canvas}
-          strokeWidth={this.state.brushSize}
-          strokeColor={this.state.color}
-        />
-
-        {/* <button className="p-2"
+				{/* <button className="p-2"
               onClick={() => {
                 this.canvas.current
                   .exportImage("png")
@@ -120,11 +267,9 @@ saveFile(file, 'drawing.png');
             >
               Get Png
             </button> */}
-      </div>
-    );
-  }
-
-
+			</div>
+		);
+	}
 }
 
 export default Canvas;
