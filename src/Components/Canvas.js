@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
+import axios from 'axios'
+import ArtworkSave from './ArtworkSave'
+import FadeIn from 'react-fade-in';
 import saveFile from 'save-as-file';
 import 'semantic-ui-css/semantic.min.css';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Transition } from 'semantic-ui-react';
 const styles = {
 	border: '0.0625rem solid #9c9c9c',
 	borderRadius: '0.25rem',
@@ -63,6 +66,16 @@ class Canvas extends Component {
 	brushSizeChange(number) {
 		this.canvas.current.eraseMode(false);
 		this.setState({ brushSize: parseInt(number) });
+	}
+
+	posttingArtwork (art){
+		// console.log(art)
+		console.log(`${process.env.REACT_APP_API_POST}`)
+		axios.post(`${process.env.REACT_APP_API_POST}`, { art: art })
+		  .then(res => {
+		    console.log(res);
+		    console.log(res.data);
+		  }).catch(err=>console.log(err))
 	}
 	colorChange(name) {
     this.canvas.current.eraseMode(false);
@@ -190,10 +203,13 @@ class Canvas extends Component {
 							this.canvas.current
 								.exportSvg('svg')
 								.then((data) => {
-									console.log(data);
-									console.log(typeof data);
+									// console.log(data);
+									// console.log(typeof data);
 									let file = new File([data], { type: 'image/svg+xml' });
-									saveFile(file, 'drawing.svg');
+									let stringedSVG = JSON.stringify(data)
+									// console.log(stringedSVG)
+									this.posttingArtwork(stringedSVG)
+									// saveFile(file, 'drawing.svg');
 								})
 								.catch((e) => {
 									console.log(e);
@@ -233,16 +249,15 @@ class Canvas extends Component {
 					<div className="flex"> Tints: {this.state.tints.map((color, index) => {
             let newclassname = ''
             let divClassname = ''
-            if (color.color == 'white')  
+            if (color.color === 'white')  
             {newclassname = `bg-white p-6 border-black border`
             divClassname = `bg-white m-1`
           } else {
               newclassname = `bg-${this.state.originalColor}-${color.color} p-6 border-black border`
-              divClassname = `bg-${this.state.originalColor}-${color.color} m-1`
             }
-            return <div className="m-1"key={index} style={{backgroundColor: color.val}}><button className={newclassname}
+            return  <FadeIn delay={100}><div className="m-1 fading" key={index} style={{backgroundColor: color.val}}><button className={newclassname}
             onClick={() => this.tintChange(color.val)}
-          /></div>
+          /></div></FadeIn>
           })}</div>
 				</section>
 
@@ -253,24 +268,7 @@ class Canvas extends Component {
 					strokeColor={this.state.color}
 				/>
 
-				{/* <button className="p-2"
-              onClick={() => {
-                this.canvas.current
-                  .exportImage("png")
-                  .then(data => {
-                    console.log(data);
-                    console.log(typeof(data));
-                    let file = new File(data, {type: 'image/png'});
-saveFile(file, 'drawing.png');
-
-                  })
-                  .catch(e => {
-                    console.log(e);
-                  });
-              }}
-            >
-              Get Png
-            </button> */}
+				
 			</div>
 		);
 	}

@@ -2,6 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import Canvas from "./Components/Canvas"
+import CanvasListing from "./Components/CanvasListing"
+import { Route, Link, Switch, Redirect } from 'react-router-dom';
 const styles = {
   border: "0.0625rem solid #9c9c9c",
   borderRadius: "0.25rem",
@@ -10,14 +12,8 @@ const styles = {
 function App() {
   return (
     <div className="App">
-      <Canvas></Canvas>
-      {/* <ReactSketchCanvas
-      style={styles}
-      width="600"
-      height="400"
-      strokeWidth={4}
-      strokeColor="red"
-    /> */}
+    <Route path="/" exact component={CanvasListing} />
+    <Route path="/canvas" exact component={Canvas} />
     </div>
   );
 }
