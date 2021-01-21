@@ -23,9 +23,9 @@ class CanvasListing extends Component {
     render() {
         return (
             <div>
-<section className="flex">
+<section className="flex flex-wrap flex-row">
 {this.state.data.map((artwork, index) => (
-        <div key={index} className="h-70 border border-black m-4">{parse(JSON.parse(artwork.art))}</div>
+        <div key={index} className="h-70 border border-black m-4 w-52">{parse(JSON.parse(artwork.art))}</div>
     ))}</section>
 
                 
