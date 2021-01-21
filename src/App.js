@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import Canvas from "./Components/Canvas"
+import Home from "./Components/Home"
 import CanvasListing from "./Components/CanvasListing"
 import { Route, Link, Switch, Redirect } from 'react-router-dom';
 const styles = {
@@ -12,7 +13,8 @@ const styles = {
 function App() {
   return (
     <div className="App">
-    <Route path="/" exact component={CanvasListing} />
+    <Route path="/" exact component={Home} />
+    <Route path="/list" exact component={CanvasListing} />
     <Route path="/canvas" exact component={Canvas} />
     </div>
   );
