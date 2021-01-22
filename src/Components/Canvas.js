@@ -72,8 +72,7 @@ class Canvas extends Component {
 
 	posttingArtwork (art, paths){
 		// console.log(art)
-		axios.post(`http://localhost:8080/api/artwork/`, { art: art, paths:paths })
-		// axios.post(`${process.env.REACT_APP_API_POST}`, { art: art })
+		axios.post(`${process.env.REACT_APP_API_POST}`, { art: art, paths:paths })
 		  .then(res => {
 		    console.log(res);
 		    console.log(res.data);
@@ -113,6 +112,19 @@ class Canvas extends Component {
   tintChange(name){
     this.canvas.current.eraseMode(false);
     this.setState({ color: name });
+  }
+  componentDidMount(){
+	  if (this.props.match.params.id){
+		  console.log("something there")
+		  axios.get(`${process.env.REACT_APP_API_POST_ID}${this.props.match.params.id}`)
+		  .then(res => {
+		    console.log(res);
+			console.log(res.data);
+			this.canvas.current.loadPaths(res.data.paths)
+		  }).catch(err=>console.log(err))
+	  } else {
+		  console.log("nope")
+	  }
   }
 	render() {
 		return (
@@ -247,7 +259,8 @@ class Canvas extends Component {
 								}).then(
 									this.canvas.current.exportSvg('svg').then(
 										(data) => {
-											art = data
+											let stringedSVG = JSON.stringify(data)
+											art = stringedSVG
 										}
 									)
 								).then((data)=>{
