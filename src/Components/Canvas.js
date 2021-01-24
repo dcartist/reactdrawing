@@ -33,7 +33,8 @@ class Canvas extends Component {
 				{ color: '200', val: 'rgba(191, 219, 254)'},
 			],
 			yellow: [
-				{ color: '400', val: 'yellow' },
+				{ color: '500', val: '#F59E0B' },
+				{ color: '400', val: '#FBBF24' },
 				{ color: '300', val: 'rgba(252, 211, 77)' },
 				{ color: '200', val: 'rgba(253, 230, 138)' },
 				{ color: '100', val: 'rgba(254, 243, 199)' },
@@ -91,7 +92,7 @@ class Canvas extends Component {
         break
       case "yellow":
         this.setState({tints: this.state.yellow})
-        this.setState({ color: name, originalColor:name });
+        this.setState({ color: '#FCD34D', originalColor:name });
         break
       case "white":
         this.setState({tints: this.state.white})
@@ -212,7 +213,7 @@ class Canvas extends Component {
 					</button>
 
 					<button
-						className="ml-4 disable-select"
+						className="ml-4 disable-select border p-2 border-black"
 						onClick={() => {
 							this.canvas.current
 								.exportSvg('svg')
@@ -236,7 +237,7 @@ class Canvas extends Component {
 
 					
 					<button
-						className="ml-4 disable-select"
+						className="ml-4 disable-select border p-2 border-black"
 						onClick={() => {
 							let paths = []
 							let art = ''
@@ -268,7 +269,6 @@ class Canvas extends Component {
 				<section className="grid grid-cols-2">
 					<div>
 						<div>
-              Colors: 
 							<button
 								className="bg-black p-5 m-1 rounded-full border-black border"
 								onClick={() => this.colorChange('black')}
@@ -292,7 +292,7 @@ class Canvas extends Component {
 						</div>
 					</div>
           
-					<div className="flex"> Tints: {this.state.tints.map((color, index) => {
+					<div className="flex"> {this.state.tints.map((color, index) => {
             let newclassname = ''
             let divClassname = ''
             if (color.color === 'white')  
@@ -308,7 +308,7 @@ class Canvas extends Component {
 				</section>
 
 				<ReactSketchCanvas
-					height="85vh"
+					height="77vh"
 					ref={this.canvas}
 					strokeWidth={this.state.brushSize}
 					strokeColor={this.state.color}
