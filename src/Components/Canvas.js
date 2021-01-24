@@ -15,7 +15,9 @@ class Canvas extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			brushSize: 50,
+			paths:[],
+			art:'',
+		brushSize: 50,
       color: 'gray',
       originalColor:'gray',
 			red: [
@@ -31,7 +33,8 @@ class Canvas extends Component {
 				{ color: '200', val: 'rgba(191, 219, 254)'},
 			],
 			yellow: [
-				{ color: '400', val: 'yellow' },
+				{ color: '500', val: '#F59E0B' },
+				{ color: '400', val: '#FBBF24' },
 				{ color: '300', val: 'rgba(252, 211, 77)' },
 				{ color: '200', val: 'rgba(253, 230, 138)' },
 				{ color: '100', val: 'rgba(254, 243, 199)' },
@@ -68,10 +71,9 @@ class Canvas extends Component {
 		this.setState({ brushSize: parseInt(number) });
 	}
 
-	posttingArtwork (art){
+	posttingArtwork (art, paths){
 		// console.log(art)
-		console.log(`${process.env.REACT_APP_API_POST}`)
-		axios.post(`${process.env.REACT_APP_API_POST}`, { art: art })
+		axios.post(`${process.env.REACT_APP_API_POST}`, { art: art, paths:paths })
 		  .then(res => {
 		    console.log(res);
 		    console.log(res.data);
@@ -90,7 +92,7 @@ class Canvas extends Component {
         break
       case "yellow":
         this.setState({tints: this.state.yellow})
-        this.setState({ color: name, originalColor:name });
+        this.setState({ color: '#FCD34D', originalColor:name });
         break
       case "white":
         this.setState({tints: this.state.white})
@@ -111,6 +113,19 @@ class Canvas extends Component {
   tintChange(name){
     this.canvas.current.eraseMode(false);
     this.setState({ color: name });
+  }
+  componentDidMount(){
+	  if (this.props.match.params.id){
+		  console.log("something there")
+		  axios.get(`${process.env.REACT_APP_API_POST_ID}${this.props.match.params.id}`)
+		  .then(res => {
+		    console.log(res);
+			console.log(res.data);
+			this.canvas.current.loadPaths(res.data.paths)
+		  }).catch(err=>console.log(err))
+	  } else {
+		  console.log("nope")
+	  }
   }
 	render() {
 		return (
@@ -198,7 +213,7 @@ class Canvas extends Component {
 					</button>
 
 					<button
-						className="ml-4 disable-select"
+						className="ml-4 disable-select border p-2 border-black"
 						onClick={() => {
 							this.canvas.current
 								.exportSvg('svg')
@@ -208,21 +223,52 @@ class Canvas extends Component {
 									let file = new File([data], { type: 'image/svg+xml' });
 									let stringedSVG = JSON.stringify(data)
 									// console.log(stringedSVG)
-									this.posttingArtwork(stringedSVG)
-									// saveFile(file, 'drawing.svg');
+									// this.posttingArtwork(stringedSVG)
+									saveFile(file, 'drawing.svg');
 								})
 								.catch((e) => {
 									console.log(e);
 								});
+								
 						}}
 					>
-						Save to SVG
+						Download SVG
+					</button>
+
+					
+					<button
+						className="ml-4 disable-select border p-2 border-black"
+						onClick={() => {
+							let paths = []
+							let art = ''
+							this.canvas.current
+								.exportPaths()
+								.then((data) => {
+									console.log(data);
+									console.log(typeof data);
+									paths = data
+								}).then(
+									this.canvas.current.exportSvg('svg').then(
+										(data) => {
+											let stringedSVG = JSON.stringify(data)
+											art = stringedSVG
+										}
+									)
+								).then((data)=>{
+									this.posttingArtwork(art,paths)
+								})
+								.catch((e) => {
+									console.log(e);
+								});
+
+						}}
+					>
+						Save Artwork
 					</button>
 				</div>
 				<section className="grid grid-cols-2">
 					<div>
 						<div>
-              Colors: 
 							<button
 								className="bg-black p-5 m-1 rounded-full border-black border"
 								onClick={() => this.colorChange('black')}
@@ -246,7 +292,7 @@ class Canvas extends Component {
 						</div>
 					</div>
           
-					<div className="flex"> Tints: {this.state.tints.map((color, index) => {
+					<div className="flex"> {this.state.tints.map((color, index) => {
             let newclassname = ''
             let divClassname = ''
             if (color.color === 'white')  
@@ -262,7 +308,7 @@ class Canvas extends Component {
 				</section>
 
 				<ReactSketchCanvas
-					height="85vh"
+					height="77vh"
 					ref={this.canvas}
 					strokeWidth={this.state.brushSize}
 					strokeColor={this.state.color}
