@@ -5,7 +5,7 @@ import ArtworkSave from './ArtworkSave'
 import FadeIn from 'react-fade-in';
 import saveFile from 'save-as-file';
 import 'semantic-ui-css/semantic.min.css';
-import { Icon, Transition } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 const styles = {
 	border: '0.0625rem solid #9c9c9c',
 	borderRadius: '0.25rem',
@@ -75,8 +75,7 @@ class Canvas extends Component {
 		// console.log(art)
 		axios.post(`${process.env.REACT_APP_API_POST}`, { art: art, paths:paths })
 		  .then(res => {
-		    console.log(res);
-		    console.log(res.data);
+			  console.log("")
 		  }).catch(err=>console.log(err))
 	}
 	colorChange(name) {
@@ -232,7 +231,7 @@ class Canvas extends Component {
 								
 						}}
 					>
-						Download SVG
+						<Icon name="download"></Icon>
 					</button>
 
 					
@@ -263,7 +262,7 @@ class Canvas extends Component {
 
 						}}
 					>
-						Save Artwork
+							<Icon name="save"></Icon>
 					</button>
 				</div>
 				<section className="grid grid-cols-2">
@@ -296,12 +295,12 @@ class Canvas extends Component {
             let newclassname = ''
             let divClassname = ''
             if (color.color === 'white')  
-            {newclassname = `bg-white p-6 border-black border`
+            {newclassname = `bg-white p-5 rounded-full border-black border`
             divClassname = `bg-white m-1`
           } else {
-              newclassname = `bg-${this.state.originalColor}-${color.color} p-6 border-black border`
+              newclassname = `bg-${this.state.originalColor}-${color.color} p-5 rounded-full border-black border`
             }
-            return  <FadeIn delay={100}><div className="m-1 fading" key={index} style={{backgroundColor: color.val}}><button className={newclassname}
+            return  <FadeIn delay={100}><div className="m-1 fading rounded-full" key={index} style={{backgroundColor: color.val}}><button className={newclassname}
             onClick={() => this.tintChange(color.val)}
           /></div></FadeIn>
           })}</div>

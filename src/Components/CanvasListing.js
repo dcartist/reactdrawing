@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DeleteArtwork from './DeleteArtwork'
+import SavingArtwork from './Saving'
 import axios from 'axios'
 import parse from 'html-react-parser';
 import {Link} from 'react-router-dom'
@@ -29,7 +30,7 @@ class CanvasListing extends Component {
 
 {this.state.data.map((artwork, index) => (
         <div key={index} className="h-70 border border-gray-700 m-10 w-52 shadow-lg"><Link to={"/canvas/"+artwork._id}>{parse(JSON.parse(artwork.art))}</Link>
-        <button className="border-black m-2 border p-2"> <Icon name="download"></Icon></button>
+        <SavingArtwork {...artwork}></SavingArtwork>
         <DeleteArtwork id={artwork._id}></DeleteArtwork>
         
         </div>

@@ -2,11 +2,11 @@ import React from 'react'
 import { Button, Header, Icon, Modal } from 'semantic-ui-react'
 import saveFile from 'save-as-file';
 
-function SavingArt(props) {
+function Saving(props) {
   const [open, setOpen] = React.useState(false)
   function savingSVG(){
-      console.log(props)
-      let convertedSVG = JSON.parse(props)
+      console.log(props.art)
+      let convertedSVG = JSON.parse(props.art)
       let file = new File([convertedSVG], { type: 'image/svg+xml' });
     console.log(convertedSVG)
     saveFile(file, 'drawing.svg');
@@ -40,4 +40,4 @@ function SavingArt(props) {
   )
 }
 
-export default SavingArt
+export default Saving
