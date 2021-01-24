@@ -306,8 +306,8 @@ class Canvas extends Component {
           })}</div>
 				</section>
 
-				<ReactSketchCanvas
-					height="77vh"
+				<ReactSketchCanvas 
+					height="80vh"
 					ref={this.canvas}
 					strokeWidth={this.state.brushSize}
 					strokeColor={this.state.color}
