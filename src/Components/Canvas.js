@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
 import axios from 'axios'
 import ArtworkSave from './ArtworkSave'
-import FadeIn from 'react-fade-in';
+import Fade from 'react-reveal/Fade';
+
 import saveFile from 'save-as-file';
 import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
@@ -17,6 +18,7 @@ class Canvas extends Component {
 		this.state = {
 			paths:[],
 			art:'',
+			show: true,
 		brushSize: 50,
       color: 'gray',
       originalColor:'gray',
@@ -79,35 +81,43 @@ class Canvas extends Component {
 		  }).catch(err=>console.log(err))
 	}
 	colorChange(name) {
+	this.setState({ show: false });
     this.canvas.current.eraseMode(false);
     switch(name){
       case "blue":
         this.setState({tints: this.state.blue})
-        this.setState({ color: name, originalColor:name });
+		this.setState({ color: name, originalColor:name });
+		this.setState({ show: true });
         break
       case "red":
         this.setState({tints: this.state.red})
         this.setState({ color: name, originalColor:name });
+		this.setState({ show: true });
         break
       case "yellow":
         this.setState({tints: this.state.yellow})
         this.setState({ color: '#FCD34D', originalColor:name });
+		this.setState({ show: true });
         break
       case "white":
         this.setState({tints: this.state.white})
         this.setState({ color: 'white', originalColor:'gray' });
+		this.setState({ show: true });
         break
       case "gray":
         this.setState({tints: this.state.gray})
         this.setState({ color: 'gray', originalColor:'gray' });
+		this.setState({ show: true });
         break
       case "black":
         this.setState({tints: this.state.black})
         this.setState({ color: 'black', originalColor:'gray' });
+		this.setState({ show: true });
         break
       default:
       this.setState({ color: name });
-    }  
+	  this.setState({ show: true });
+	}  
   }
   tintChange(name){
     this.canvas.current.eraseMode(false);
@@ -291,7 +301,7 @@ class Canvas extends Component {
 						</div>
 					</div>
           
-					<div className="flex"> {this.state.tints.map((color, index) => {
+					<div className="flex"> <Fade opposite cascade when={this.state.show}>{this.state.tints.map((color, index) => {
             let newclassname = ''
             let divClassname = ''
             if (color.color === 'white')  
@@ -300,10 +310,12 @@ class Canvas extends Component {
           } else {
               newclassname = `bg-${this.state.originalColor}-${color.color} p-5 rounded-full border-black border`
             }
-            return  <FadeIn delay={100}><div className="m-1 fading rounded-full" key={index} style={{backgroundColor: color.val}}><button className={newclassname}
+            return  <div className="m-1 fading rounded-full" key={index} style={{backgroundColor: color.val}}><button className={newclassname}
             onClick={() => this.tintChange(color.val)}
-          /></div></FadeIn>
-          })}</div>
+          /></div>
+          })}
+		  </Fade>
+		  </div>
 				</section>
 
 				<ReactSketchCanvas 
