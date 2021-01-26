@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
+import axios from 'axios'
+import ArtworkSave from './ArtworkSave'
+import Fade from 'react-reveal/Fade';
+
 import saveFile from 'save-as-file';
 import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
@@ -12,7 +16,10 @@ class Canvas extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			brushSize: 50,
+			paths:[],
+			art:'',
+			show: true,
+		brushSize: 50,
       color: 'gray',
       originalColor:'gray',
 			red: [
@@ -28,7 +35,8 @@ class Canvas extends Component {
 				{ color: '200', val: 'rgba(191, 219, 254)'},
 			],
 			yellow: [
-				{ color: '400', val: 'yellow' },
+				{ color: '500', val: '#F59E0B' },
+				{ color: '400', val: '#FBBF24' },
 				{ color: '300', val: 'rgba(252, 211, 77)' },
 				{ color: '200', val: 'rgba(253, 230, 138)' },
 				{ color: '100', val: 'rgba(254, 243, 199)' },
@@ -64,40 +72,69 @@ class Canvas extends Component {
 		this.canvas.current.eraseMode(false);
 		this.setState({ brushSize: parseInt(number) });
 	}
+
+	posttingArtwork (art, paths){
+		// console.log(art)
+		axios.post(`${process.env.REACT_APP_API_POST}`, { art: art, paths:paths })
+		  .then(res => {
+			  console.log("")
+		  }).catch(err=>console.log(err))
+	}
 	colorChange(name) {
+	this.setState({ show: false });
     this.canvas.current.eraseMode(false);
     switch(name){
       case "blue":
         this.setState({tints: this.state.blue})
-        this.setState({ color: name, originalColor:name });
+		this.setState({ color: name, originalColor:name });
+		this.setState({ show: true });
         break
       case "red":
         this.setState({tints: this.state.red})
         this.setState({ color: name, originalColor:name });
+		this.setState({ show: true });
         break
       case "yellow":
         this.setState({tints: this.state.yellow})
-        this.setState({ color: name, originalColor:name });
+        this.setState({ color: '#FCD34D', originalColor:name });
+		this.setState({ show: true });
         break
       case "white":
         this.setState({tints: this.state.white})
         this.setState({ color: 'white', originalColor:'gray' });
+		this.setState({ show: true });
         break
       case "gray":
         this.setState({tints: this.state.gray})
         this.setState({ color: 'gray', originalColor:'gray' });
+		this.setState({ show: true });
         break
       case "black":
         this.setState({tints: this.state.black})
         this.setState({ color: 'black', originalColor:'gray' });
+		this.setState({ show: true });
         break
       default:
       this.setState({ color: name });
-    }  
+	  this.setState({ show: true });
+	}  
   }
   tintChange(name){
     this.canvas.current.eraseMode(false);
     this.setState({ color: name });
+  }
+  componentDidMount(){
+	  if (this.props.match.params.id){
+		  console.log("something there")
+		  axios.get(`${process.env.REACT_APP_API_POST_ID}${this.props.match.params.id}`)
+		  .then(res => {
+		    console.log(res);
+			console.log(res.data);
+			this.canvas.current.loadPaths(res.data.paths)
+		  }).catch(err=>console.log(err))
+	  } else {
+		  console.log("nope")
+	  }
   }
 	render() {
 		return (
@@ -185,28 +222,62 @@ class Canvas extends Component {
 					</button>
 
 					<button
-						className="ml-4 disable-select"
+						className="ml-4 disable-select border p-2 border-black"
 						onClick={() => {
 							this.canvas.current
 								.exportSvg('svg')
 								.then((data) => {
-									console.log(data);
-									console.log(typeof data);
+									// console.log(data);
+									// console.log(typeof data);
 									let file = new File([data], { type: 'image/svg+xml' });
+									let stringedSVG = JSON.stringify(data)
+									// console.log(stringedSVG)
+									// this.posttingArtwork(stringedSVG)
 									saveFile(file, 'drawing.svg');
 								})
 								.catch((e) => {
 									console.log(e);
 								});
+								
 						}}
 					>
-						Save to SVG
+						<Icon name="download"></Icon>
+					</button>
+
+					
+					<button
+						className="ml-4 disable-select border p-2 border-black"
+						onClick={() => {
+							let paths = []
+							let art = ''
+							this.canvas.current
+								.exportPaths()
+								.then((data) => {
+									console.log(data);
+									console.log(typeof data);
+									paths = data
+								}).then(
+									this.canvas.current.exportSvg('svg').then(
+										(data) => {
+											let stringedSVG = JSON.stringify(data)
+											art = stringedSVG
+										}
+									)
+								).then((data)=>{
+									this.posttingArtwork(art,paths)
+								})
+								.catch((e) => {
+									console.log(e);
+								});
+
+						}}
+					>
+							<Icon name="save"></Icon>
 					</button>
 				</div>
 				<section className="grid grid-cols-2">
 					<div>
 						<div>
-              Colors: 
 							<button
 								className="bg-black p-5 m-1 rounded-full border-black border"
 								onClick={() => this.colorChange('black')}
@@ -230,43 +301,31 @@ class Canvas extends Component {
 						</div>
 					</div>
           
-					<div className="flex"> Tints: {this.state.tints.map((color, index) => {
+					<div className="flex"> <Fade opposite cascade when={this.state.show}>{this.state.tints.map((color, index) => {
             let newclassname = ''
-            if (color.color == 'white')  
-            {newclassname = `bg-white p-6 border-black border`} else {
-              newclassname = `bg-${this.state.originalColor}-${color.color} p-6 border-black border`
+            let divClassname = ''
+            if (color.color === 'white')  
+            {newclassname = `bg-white p-5 rounded-full border-black border`
+            divClassname = `bg-white m-1`
+          } else {
+              newclassname = `bg-${this.state.originalColor}-${color.color} p-5 rounded-full border-black border`
             }
-            return <div className="m-1" key={index}><button className={newclassname}
+            return  <div className="m-1 fading rounded-full" key={index} style={{backgroundColor: color.val}}><button className={newclassname}
             onClick={() => this.tintChange(color.val)}
           /></div>
-          })}</div>
+          })}
+		  </Fade>
+		  </div>
 				</section>
 
-				<ReactSketchCanvas
-					height="85vh"
+				<ReactSketchCanvas 
+					height="80vh"
 					ref={this.canvas}
 					strokeWidth={this.state.brushSize}
 					strokeColor={this.state.color}
 				/>
 
-				{/* <button className="p-2"
-              onClick={() => {
-                this.canvas.current
-                  .exportImage("png")
-                  .then(data => {
-                    console.log(data);
-                    console.log(typeof(data));
-                    let file = new File(data, {type: 'image/png'});
-saveFile(file, 'drawing.png');
-
-                  })
-                  .catch(e => {
-                    console.log(e);
-                  });
-              }}
-            >
-              Get Png
-            </button> */}
+				
 			</div>
 		);
 	}
