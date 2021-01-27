@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
 import axios from 'axios'
-import { SliderPicker, SketchPicker } from 'react-color';
+import { SliderPicker, SketchPicker, GithubPicker} from 'react-color';
 
 import saveFile from 'save-as-file';
 import 'semantic-ui-css/semantic.min.css';
@@ -289,6 +289,12 @@ class Canvas extends Component {
 					>
 							<Icon name="save"></Icon>
 					</button>
+					<GithubPicker width='100%'
+					onChange={this.handleChangeComplete}
+					color={ this.state.background }
+					pointer={this.Picker}
+					colors={['#000000', '#999999', '#FFFFFF', '#F44E3B', '#FE9200', '#FCDC00', '#DBDF00', '#A4DD00', '#68CCCA', '#73D8FF', '#AEA1FF', '#FDA1FF', '#333333', '#808080', '#cccccc', '#D33115', '#E27300', '#FCC400', '#B0BC00', '#68BC00', '#16A5A5', '#009CE0', '#7B64FF', '#888888','#777777', '#666666', '#555555','#B3B3B3', '#9F0500', '#C45100', '#FB9E00', '#808900', '#194D33', '#0C797D', '#0062B1', '#653294', '#AB149E']}
+					 />
 				</div>
 				<div className="p-1" style={{
         width: "100%",
