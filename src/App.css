@@ -1,6 +1,12 @@
-*{
+/* *{
   user-select:none;
+} */
+/* .hue-horizontal{
+  height:120px !important;
 }
+div.slide-picker{
+  height:220px !important;
+} */
 .App {
   text-align: center;
 }

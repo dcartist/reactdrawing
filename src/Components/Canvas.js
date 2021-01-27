@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
 import axios from 'axios'
-import ArtworkSave from './ArtworkSave'
+import { SliderPicker, SketchPicker } from 'react-color';
 import Fade from 'react-reveal/Fade';
 
 import saveFile from 'save-as-file';
@@ -275,6 +275,10 @@ class Canvas extends Component {
 							<Icon name="save"></Icon>
 					</button>
 				</div>
+				<div className="p-5"><SliderPicker/> <SketchPicker /></div>
+				
+
+
 				<section className="grid grid-cols-2">
 					<div>
 						<div>

@@ -3,6 +3,7 @@ import './App.css';
 import React, { Component } from 'react';
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import Canvas from "./Components/Canvas"
+import Picker from "./Components/ColorPicker"
 import Navigation from "./Components/Navigation"
 import Home from "./Components/Home"
 import CanvasListing from "./Components/CanvasListing"
@@ -29,6 +30,7 @@ class App extends Component {
     <Navigation></Navigation>
     <Route path="/" exact component={Home} />
     <Route path="/list" exact component={CanvasListing} />
+    <Route path="/picker" exact component={Picker} />
     <Route path="/canvas" exact component={Canvas} />
     <Route
 					path="/canvas/:id"
