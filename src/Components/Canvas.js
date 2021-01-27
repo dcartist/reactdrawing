@@ -2,15 +2,11 @@ import React, { Component } from 'react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
 import axios from 'axios'
 import { SliderPicker, SketchPicker } from 'react-color';
-import Fade from 'react-reveal/Fade';
 
 import saveFile from 'save-as-file';
 import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
-const styles = {
-	border: '0.0625rem solid #9c9c9c',
-	borderRadius: '0.25rem',
-};
+
 
 class Canvas extends Component {
 	constructor(props) {
@@ -19,7 +15,8 @@ class Canvas extends Component {
 			paths:[],
 			art:'',
 			show: true,
-		brushSize: 50,
+			background: '#000',
+		brushSize: 5,
       color: 'gray',
       originalColor:'gray',
 			red: [
@@ -68,6 +65,9 @@ class Canvas extends Component {
 		};
 		this.canvas = React.createRef();
 	}
+	handleChangeComplete = (color) => {
+        this.setState({ background: color.hex });
+      };
 	brushSizeChange(number) {
 		this.canvas.current.eraseMode(false);
 		this.setState({ brushSize: parseInt(number) });
@@ -123,6 +123,21 @@ class Canvas extends Component {
     this.canvas.current.eraseMode(false);
     this.setState({ color: name });
   }
+  Picker = () => {
+	return (
+			<div
+			style={{
+				width: 30,
+				height: 30,
+				borderRadius: 20,
+				background: "rgba(255,255,255,0.2)",
+				border: "1px solid white",
+				boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
+				boxSizing: "border-box"
+			}}
+			/>
+		);
+	}
   componentDidMount(){
 	  if (this.props.match.params.id){
 		  console.log("something there")
@@ -275,9 +290,18 @@ class Canvas extends Component {
 							<Icon name="save"></Icon>
 					</button>
 				</div>
-				<div className="p-5"><SliderPicker/> <SketchPicker /></div>
-				
+				<div className="p-1" style={{
+        width: "100%",
+        height: "80px"
+      }}>
+    
 
+<SliderPicker {...this.props}
+        onChange={this.handleChangeComplete}
+        color={ this.state.background }
+        pointer={this.Picker}/></div>
+				
+{/* 
 
 				<section className="grid grid-cols-2">
 					<div>
@@ -320,13 +344,13 @@ class Canvas extends Component {
           })}
 		  </Fade>
 		  </div>
-				</section>
+				</section> */}
 
 				<ReactSketchCanvas 
 					height="80vh"
 					ref={this.canvas}
 					strokeWidth={this.state.brushSize}
-					strokeColor={this.state.color}
+					strokeColor={this.state.background}
 				/>
 
 				

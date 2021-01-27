@@ -1,10 +1,35 @@
 /* *{
   user-select:none;
 } */
-/* .hue-horizontal{
-  height:120px !important;
+.hue-horizontal{
+  height:20px !important;
+  width: 100% !important;
+  /* width: 400px !important; */
+  position: relative;
 }
-div.slide-picker{
+
+.slider-picker div:first-child{
+  height:30px !important;
+  position: relative;
+  transform: scale(1.0) !important;
+}
+.slider-picker div:first-child:focus{
+  height:20px !important;
+  position: relative;
+  transform: scale(1.2) !important;
+  /* transform: scaleY(1.0) !important;
+  transform: scaleX(1.0) !important; */
+}
+
+.slider-picker div:first-child ::selection{
+  height:20px !important;
+  position: relative;
+  transform: scale(1.2) !important;
+  /* transform: scaleY(1.0) !important;
+  transform: scaleX(1.0) !important; */
+}
+
+/* div.slide-picker{
   height:220px !important;
 } */
 .App {
