@@ -1,5 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
 *{
   user-select:none;
+  font-family: 'Roboto', sans-serif;
+}
+.thinfont{
+  font-weight: 100 !important;
+  font-family: 'Roboto', sans-serif;
 }
 .hue-horizontal{
   height:20px !important;
@@ -35,7 +42,7 @@
 .App {
   text-align: center;
 }
-
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -69,7 +76,7 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 
 .disable-select{
