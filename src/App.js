@@ -3,8 +3,8 @@ import './App.css';
 import React, { Component } from 'react';
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import Canvas from "./Components/Canvas"
-// import Picker from "./Components/Picker"
-import Picker from "./Components/ColorPicker"
+import Picker from "./Components/Picker"
+// import Picker from "./Components/ColorPicker"
 import Navigation from "./Components/Navigation"
 import Home from "./Components/Home"
 import CanvasListing from "./Components/CanvasListing"

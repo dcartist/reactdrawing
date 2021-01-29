@@ -16,6 +16,7 @@ class Canvas extends Component {
 			art:'',
 			show: true,
 			background: '#000',
+			showorhide:false,
 		brushSize: 5,
       color: 'gray',
       originalColor:'gray',
@@ -65,6 +66,8 @@ class Canvas extends Component {
 		};
 		this.canvas = React.createRef();
 	}
+	setShowResults = () => this.setState({showorhide: !this.state.showorhide})
+
 	handleChangeComplete = (color) => {
         this.setState({ background: color.hex });
       };
@@ -155,6 +158,10 @@ class Canvas extends Component {
 		return (
 			<div>
 				<div>
+				<button onClick={() => this.setShowResults()}>
+            Click to hide Demo1 component
+          </button>
+		  {this.state.showorhide ? "This is one" : "This is two"}
 					<button
 						className="mr-2 disable-select"
 						onClick={() => {
