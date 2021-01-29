@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
+import Picker from './Picker'
 import axios from 'axios'
 import { SliderPicker, SketchPicker, GithubPicker} from 'react-color';
-
+import { HexColorPicker } from "react-colorful";
 import saveFile from 'save-as-file';
 import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
@@ -16,6 +17,7 @@ class Canvas extends Component {
 			art:'',
 			show: true,
 			background: '#000',
+			color: '#000',
 			showorhide:false,
 		brushSize: 5,
       color: 'gray',
@@ -82,6 +84,10 @@ class Canvas extends Component {
 		  .then(res => {
 			  console.log("")
 		  }).catch(err=>console.log(err))
+	}
+
+	newColorChange=(color)=>{
+		this.setState(prevState =>({ color: color }));
 	}
 	colorChange(name) {
 	this.setState({ show: false });
@@ -158,10 +164,14 @@ class Canvas extends Component {
 		return (
 			<div>
 				<div>
+					{this.state.color}
 				<button onClick={() => this.setShowResults()}>
             Click to hide Demo1 component
           </button>
-		  {this.state.showorhide ? "This is one" : "This is two"}
+		  <div className="aboveOthers">{this.state.showorhide ? <div>This is one</div> : <div><HexColorPicker className="z-10" color={this.state.originalColor} onChange={() => {
+							this.colorChange(this.color);
+						}} /></div>}</div>
+		  
 					<button
 						className="mr-2 disable-select"
 						onClick={() => {
@@ -296,23 +306,9 @@ class Canvas extends Component {
 					>
 							<Icon name="save"></Icon>
 					</button>
-					<GithubPicker width='100%'
-					onChange={this.handleChangeComplete}
-					color={ this.state.background }
-					pointer={this.Picker}
-					colors={['#000000', '#999999', '#FFFFFF', '#F44E3B', '#FE9200', '#FCDC00', '#DBDF00', '#A4DD00', '#68CCCA', '#73D8FF', '#AEA1FF', '#FDA1FF', '#333333', '#808080', '#cccccc', '#D33115', '#E27300', '#FCC400', '#B0BC00', '#68BC00', '#16A5A5', '#009CE0', '#7B64FF', '#888888','#777777', '#666666', '#555555','#B3B3B3', '#9F0500', '#C45100', '#FB9E00', '#808900', '#194D33', '#0C797D', '#0062B1', '#653294', '#AB149E']}
-					 />
+					
 				</div>
-				<div className="p-1" style={{
-        width: "100%",
-        height: "80px"
-      }}>
-    
-
-<SliderPicker {...this.props}
-        onChange={this.handleChangeComplete}
-        color={ this.state.background }
-        pointer={this.Picker}/></div>
+			
 				
 {/* 
 
