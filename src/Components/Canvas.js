@@ -310,50 +310,7 @@ class Canvas extends Component {
 				</div>
 			
 				
-{/* 
 
-				<section className="grid grid-cols-2">
-					<div>
-						<div>
-							<button
-								className="bg-black p-5 m-1 rounded-full border-black border"
-								onClick={() => this.colorChange('black')}
-							/>
-							<button
-								className="bg-red-600 p-5 m-1 rounded-full border-black border"
-								onClick={() => this.colorChange('red')}
-							/>
-							<button
-								className="bg-yellow-400 p-5 m-1 rounded-full border-black border"
-								onClick={() => this.colorChange('yellow')}
-							/>
-							<button
-								className="bg-white p-5 m-1 rounded-full border-black border"
-								onClick={() => this.colorChange('white')}
-							/>
-							<button
-								className="bg-blue-700 p-5 m-1 rounded-full border-black border"
-								onClick={() => this.colorChange('blue')}
-							/>
-						</div>
-					</div>
-          
-					<div className="flex"> <Fade opposite cascade when={this.state.show}>{this.state.tints.map((color, index) => {
-            let newclassname = ''
-            let divClassname = ''
-            if (color.color === 'white')  
-            {newclassname = `bg-white p-5 rounded-full border-black border`
-            divClassname = `bg-white m-1`
-          } else {
-              newclassname = `bg-${this.state.originalColor}-${color.color} p-5 rounded-full border-black border`
-            }
-            return  <div className="m-1 fading rounded-full" key={index} style={{backgroundColor: color.val}}><button className={newclassname}
-            onClick={() => this.tintChange(color.val)}
-          /></div>
-          })}
-		  </Fade>
-		  </div>
-				</section> */}
 
 				<ReactSketchCanvas 
 					height="80vh"
