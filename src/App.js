@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import "tailwindcss/tailwind.css"
 import React, { Component } from 'react';
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import Canvas from "./Components/Canvas"
