@@ -4,6 +4,7 @@ import "tailwindcss/tailwind.css"
 import React, { Component } from 'react';
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import Canvas from "./Components/Canvas"
+import CanvasNew from "./Components/CanvasNew"
 import Picker from "./Components/Picker"
 // import Picker from "./Components/ColorPicker"
 import Navigation from "./Components/Navigation"
@@ -34,6 +35,7 @@ class App extends Component {
     <Route path="/list" exact component={CanvasListing} />
     <Route path="/picker" exact component={Picker} />
     <Route path="/canvas" exact component={Canvas} />
+    <Route path="/new" exact component={CanvasNew} />
     <Route
 					path="/canvas/:id"
 					render={(props) => <Canvas setartId={this.artId} {...props} {...this.state} />}
