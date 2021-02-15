@@ -1,6 +1,5 @@
 import { Icon,  Button, Popup } from 'semantic-ui-react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
-import { Slider } from "react-semantic-ui-range";
 import { HexColorPicker } from 'react-colorful';
 import 'semantic-ui-css/semantic.min.css';
 import React, { useState } from 'react';
@@ -25,17 +24,7 @@ export default function CanvasNew() {
 	}
 
    
-    const styles ={
-        height: "40px",
-        inner: "40px",
-        track: { top: "19px" },
-        trackFill: { top: "19px" },
-        thumb: {
-          backgroundColor: "purple",
-          width: "40px",
-          height: "40px"
-        }
-      }
+// 
 
     const settings = {
         start: 2,
@@ -56,19 +45,39 @@ export default function CanvasNew() {
   };
 
 
-    // function handleChange(value)  {
-    //     setvalue(value)
-    //   }
-    
-    //  function handleChangeReverse(value) {
-    //     setreverseValue(value)
-    //   }
       
     return (
         <div>
- <Slider value={value} color="red" 
- 
- settings={settings} />
+<button
+						onClick={() => setbrushSize(100)}
+						className="p-2 border-2 border-gray-400 disable-select"
+					>
+						100
+					</button>
+					<button
+						onClick={() => setbrushSize(50)}
+						className="p-2 border-2 border-gray-400 disable-select"
+					>
+						50
+					</button>
+					<button
+						onClick={() => setbrushSize(10)}
+						className="p-2 border-2 border-gray-400 disable-select"
+					>
+						10
+					</button>
+					<button
+						onClick={() => setbrushSize(5)}
+						className="p-2 border-2 border-gray-400 disable-select"
+					>
+						5
+					</button>
+					<button
+						onClick={() => setbrushSize(1)}
+						className="p-2 border-2 border-gray-400 disable-select"
+					>
+						1
+					</button>
              <Popup
     content={
       <>

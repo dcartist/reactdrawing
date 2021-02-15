@@ -1,35 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
-
-*{
-  user-select:none;
+* {
+  user-select: none;
   font-family: 'Roboto', sans-serif;
 }
-.thinfont{
+
+.thinfont {
   font-weight: 100 !important;
   font-family: 'Roboto', sans-serif;
 }
-.hue-horizontal{
-  height:20px !important;
+
+.hue-horizontal {
+  height: 20px !important;
   width: 100% !important;
   /* width: 400px !important; */
   position: relative;
 }
 
-.slider-picker div:first-child{
-  height:30px !important;
+.slider-picker div:first-child {
+  height: 30px !important;
   position: relative;
   transform: scale(1.0) !important;
 }
-.slider-picker div:first-child:focus{
-  height:20px !important;
+
+.slider-picker div:first-child:focus {
+  height: 20px !important;
   position: relative;
   transform: scale(1.2) !important;
   /* transform: scaleY(1.0) !important;
   transform: scaleX(1.0) !important; */
 }
 
-.slider-picker div:first-child ::selection{
-  height:20px !important;
+.slider-picker div:first-child ::selection {
+  height: 20px !important;
   position: relative;
   transform: scale(1.2) !important;
   /* transform: scaleY(1.0) !important;
@@ -39,9 +41,25 @@
 /* div.slide-picker{
   height:220px !important;
 } */
+
 .App {
   text-align: center;
 }
+
+.track {
+  top: "19px"
+}
+
+.trackFill {
+  top: "19px"
+}
+
+.semantic_ui_range_inner > div:last-child {
+  background-color: red;
+  width: 40px;
+  height: 40px
+}
+
 /* 
 .App-logo {
   height: 40vmin;
@@ -78,27 +96,25 @@
   }
 } */
 
-
-.disable-select{
-  user-select:none;
+.disable-select {
+  user-select: none;
 }
 
-
-.fading{
+.fading {
   opacity: 1;
   animation: fadeIn 5s ease;
 }
 
-@keyframes fadeIn{
-  0%{
+@keyframes fadeIn {
+  0% {
     opacity: 0;
   }
-  100%{
+  100% {
     opacity: 1;
   }
 }
 
-.aboveOthers{
+.aboveOthers {
   z-index: 800 !important;
   position: absolute;
 }
@@ -108,16 +124,20 @@
   z-index: 40;
   position: relative;
 }
+
 .react-colorful__saturation {
   border-radius: 3px 3px 0 0;
 }
+
 .react-colorful__hue {
   height: 30px;
   border-radius: 0 0 3px 3px;
 }
+
 .react-colorful__saturation-pointer {
   border-radius: 5px;
 }
+
 .react-colorful__hue-pointer {
   border-radius: 2px;
   width: 15px;
