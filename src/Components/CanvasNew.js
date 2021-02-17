@@ -72,7 +72,7 @@ export default function CanvasNew() {
     return (
         <div>
 					
-<Slider valueLabelDisplay="on" value={value} onChange={handleChange} defaultValue={20} aria-label="pretto slider"  />
+
              <Popup
     content={
       <>
@@ -170,7 +170,7 @@ export default function CanvasNew() {
 					>
 						<Icon name="save" />
 					</button>
-
+					<PrettoSlider valueLabelDisplay="auto" value={value} onChange={handleChange} defaultValue={20} aria-label="pretto slider"  />
             <ReactSketchCanvas
 					height="80vh"
 					ref={canvas}
