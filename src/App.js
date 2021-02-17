@@ -34,11 +34,15 @@ class App extends Component {
     <Route path="/" exact component={Home} />
     <Route path="/list" exact component={CanvasListing} />
     <Route path="/picker" exact component={Picker} />
-    <Route path="/canvas" exact component={Canvas} />
+    <Route path="/canvas" exact component={CanvasNew} />
     <Route path="/new" exact component={CanvasNew} />
     <Route
 					path="/canvas/:id"
-					render={(props) => <Canvas setartId={this.artId} {...props} {...this.state} />}
+					render={(props) => <CanvasNew setartId={this.artId} {...props} {...this.state} />}
+				/>
+    <Route
+					path="/new/:id"
+					render={(props) => <CanvasNew setartId={this.artId} {...props} {...this.state} />}
 				/>
     </div>
   );

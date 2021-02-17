@@ -4,7 +4,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { HexColorPicker } from 'react-colorful';
 import Slider from '@material-ui/core/Slider';
 import 'semantic-ui-css/semantic.min.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import saveFile from 'save-as-file';
 import axios from 'axios';
 
@@ -46,11 +46,30 @@ height: 8,
 	},
   })(Slider);
 
-export default function CanvasNew() {
-
+export default function CanvasNew(props) {
+	useEffect(() => {
+		if (props.match.params.id) {
+			console.log('something there');
+			axios
+				.get(`${process.env.REACT_APP_API_POST_ID}${props.match.params.id}`)
+				.then((res) => {
+					console.log(res);
+					console.log(res.data);
+					canvas.current.loadPaths(res.data.paths);
+				})
+				.catch((err) => console.log(err));
+		} else {
+			console.log('nope');
+		}
+	 }, []);
   const classes = useStyles();  
   const handleChange = (event, newValue) => {
-	  setValue(newValue);
+	  if (newValue !== 0) {
+		  setValue(newValue);
+	  } else 
+	  {
+		setValue(1);
+	  }
 	};
 	const [value, setValue] = React.useState(30);
     const [color, setcolor] = useState('black')
@@ -70,7 +89,7 @@ export default function CanvasNew() {
    
       
     return (
-        <div>
+        <div className="mt-2">
 					
 
              <Popup
@@ -170,9 +189,11 @@ export default function CanvasNew() {
 					>
 						<Icon name="save" />
 					</button>
+					<div className="w-6/12 m-auto">
 					<PrettoSlider valueLabelDisplay="auto" value={value} onChange={handleChange} defaultValue={20} aria-label="pretto slider"  />
+					</div>
             <ReactSketchCanvas
-					height="80vh"
+					height="78vh"
 					ref={canvas}
 					strokeWidth={value}
 					strokeColor={color}

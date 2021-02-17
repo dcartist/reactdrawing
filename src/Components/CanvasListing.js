@@ -34,7 +34,8 @@ return(
     <section className="flex flex-wrap flex-row">
     
     {this.state.data.map((artwork, index) => (
-            <div key={index} className="h-70 border border-gray-700 m-10 w-52 shadow-lg"><Link to={"/canvas/"+artwork._id}>{parse(JSON.parse(artwork.art))}</Link>
+            <div key={index} className="h-70 border border-gray-700 m-10 w-52 shadow-lg"><Link to={"/new/"+artwork._id}>{parse(JSON.parse(artwork.art))}</Link>
+            {/* <div key={index} className="h-70 border border-gray-700 m-10 w-52 shadow-lg"><Link to={"/canvas/"+artwork._id}>{parse(JSON.parse(artwork.art))}</Link> */}
             <SavingArtwork {...artwork}></SavingArtwork>
             <DeleteArtwork id={artwork._id}></DeleteArtwork>
             
