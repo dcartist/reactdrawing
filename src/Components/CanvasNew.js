@@ -1,19 +1,63 @@
 import { Icon,  Button, Popup } from 'semantic-ui-react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { HexColorPicker } from 'react-colorful';
+import Slider from '@material-ui/core/Slider';
 import 'semantic-ui-css/semantic.min.css';
 import React, { useState } from 'react';
 import saveFile from 'save-as-file';
 import axios from 'axios';
 
+const useStyles = makeStyles({
+	root: {
+	  width: 200,
+	  color: '#333333',
+height: 8,
+	},
+  });
+
+  const PrettoSlider = withStyles({
+	root: {
+	  color: '#333333',
+	  height: 8,
+	},
+	thumb: {
+	  height: 25,
+	  width: 25,
+	  backgroundColor: '#fff',
+	  border: '2px solid currentColor',
+	  marginTop: -8,
+	  marginLeft: -12,
+	  '&:focus, &:hover, &$active': {
+		boxShadow: 'inherit',
+	  },
+	},
+	active: {},
+	valueLabel: {
+	  left: 'calc(-50% + 4px)',
+	},
+	track: {
+	  height: 5,
+	  borderRadius: 4,
+	},
+	rail: {
+	  height: 5,
+	  borderRadius: 4,
+	},
+  })(Slider);
 
 export default function CanvasNew() {
-    const [brushSize, setbrushSize] = useState(50)
+
+  const classes = useStyles();  
+  const handleChange = (event, newValue) => {
+	  setValue(newValue);
+	};
+	const [value, setValue] = React.useState(30);
     const [color, setcolor] = useState('black')
     const canvas = React.createRef()
     const [eventsEnabled, setEventsEnabled] = React.useState(true)
     const [open, setOpen] = React.useState(false)
-    const [value, setValue] = useState(5);
+
     function posttingArtwork(art, paths) {
 		axios
 			.post(`${process.env.REACT_APP_API_POST}`, { art: art, paths: paths })
@@ -24,60 +68,11 @@ export default function CanvasNew() {
 	}
 
    
-// 
-
-    const settings = {
-        start: 2,
-        min: 1,
-        max: 100,
-        step: 1,
-        onChange: value => {
-          setValue(value);
-        }
-      };
-
-  const handleValueChange = e => {
-    let value = parseInt(e.target.value);
-    if (!value) {
-      value = 0;
-    }
-    setValue(e.target.value);
-  };
-
-
       
     return (
         <div>
-<button
-						onClick={() => setbrushSize(100)}
-						className="p-2 border-2 border-gray-400 disable-select"
-					>
-						100
-					</button>
-					<button
-						onClick={() => setbrushSize(50)}
-						className="p-2 border-2 border-gray-400 disable-select"
-					>
-						50
-					</button>
-					<button
-						onClick={() => setbrushSize(10)}
-						className="p-2 border-2 border-gray-400 disable-select"
-					>
-						10
-					</button>
-					<button
-						onClick={() => setbrushSize(5)}
-						className="p-2 border-2 border-gray-400 disable-select"
-					>
-						5
-					</button>
-					<button
-						onClick={() => setbrushSize(1)}
-						className="p-2 border-2 border-gray-400 disable-select"
-					>
-						1
-					</button>
+					
+<Slider valueLabelDisplay="on" value={value} onChange={handleChange} defaultValue={20} aria-label="pretto slider"  />
              <Popup
     content={
       <>
@@ -166,7 +161,7 @@ export default function CanvasNew() {
 									})
 								)
 								.then((data) => {
-									this.posttingArtwork(art, paths);
+									posttingArtwork(art, paths);
 								})
 								.catch((e) => {
 									console.log(e);
@@ -179,7 +174,7 @@ export default function CanvasNew() {
             <ReactSketchCanvas
 					height="80vh"
 					ref={canvas}
-					strokeWidth={brushSize}
+					strokeWidth={value}
 					strokeColor={color}
 				/>
 
