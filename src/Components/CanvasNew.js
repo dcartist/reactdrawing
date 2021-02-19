@@ -1,10 +1,11 @@
 import { Icon,  Button, Popup } from 'semantic-ui-react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import React, { useState, useEffect } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import Slider from '@material-ui/core/Slider';
 import 'semantic-ui-css/semantic.min.css';
-import React, { useState, useEffect } from 'react';
+import { Base64 } from 'base64-string';
 import saveFile from 'save-as-file';
 import axios from 'axios';
 
@@ -47,6 +48,7 @@ height: 8,
   })(Slider);
 
 export default function CanvasNew(props) {
+	const enc = new Base64();
 	useEffect(() => {
 		if (props.match.params.id) {
 			console.log('something there');
@@ -159,6 +161,27 @@ export default function CanvasNew(props) {
 						}}
 					>
 						<Icon name="download" />
+					</button>
+            <button
+						className="ml-4 disable-select border p-2 border-black"
+						onClick={() => {
+                            console.log(canvas.current)
+							canvas.current
+								.exportImage('png')
+								.then((data) => {
+									console.log(data)
+									let b64 = data.replace("data:image/png;base64, ", "")
+
+									// let file = new File([b64], { type: 'image/png' });
+									// let stringedSVG = JSON.stringify(data)
+									saveFile(b64, 'drawing.png');
+								})
+								.catch((e) => {
+									console.log(e);
+								});
+						}}
+					>
+						<Icon name="picture" />
 					</button>
 
 					<button
