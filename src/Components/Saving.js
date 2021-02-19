@@ -11,6 +11,25 @@ function Saving(props) {
     console.log(convertedSVG)
     saveFile(file, 'drawing.svg');
   }
+
+  // function savingPNG(){
+    
+  //                           console.log(canvas.current)
+	// 						// canvas.current
+	// 							.exportImage('png')
+	// 							.then((data) => {
+	// 								console.log(data)
+	// 								let b64 = data.replace("data:image/png;base64, ", "")
+
+	// 								// let file = new File([b64], { type: 'image/png' });
+	// 								// let stringedSVG = JSON.stringify(data)
+	// 								saveFile(b64, 'drawing.png');
+	// 							})
+	// 							.catch((e) => {
+	// 								console.log(e);
+	// 							});
+				
+  // }
   return (
     <Modal
       onClose={() => setOpen(false)}

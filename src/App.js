@@ -1,8 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+import "tailwindcss/tailwind.css"
 import React, { Component } from 'react';
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import Canvas from "./Components/Canvas"
+import CanvasNew from "./Components/CanvasNew"
+import Picker from "./Components/Picker"
+// import Picker from "./Components/ColorPicker"
 import Navigation from "./Components/Navigation"
 import Home from "./Components/Home"
 import CanvasListing from "./Components/CanvasListing"
@@ -29,10 +33,16 @@ class App extends Component {
     <Navigation></Navigation>
     <Route path="/" exact component={Home} />
     <Route path="/list" exact component={CanvasListing} />
-    <Route path="/canvas" exact component={Canvas} />
+    <Route path="/picker" exact component={Picker} />
+    <Route path="/canvas" exact component={CanvasNew} />
+    <Route path="/new" exact component={CanvasNew} />
     <Route
 					path="/canvas/:id"
-					render={(props) => <Canvas setartId={this.artId} {...props} {...this.state} />}
+					render={(props) => <CanvasNew setartId={this.artId} {...props} {...this.state} />}
+				/>
+    <Route
+					path="/new/:id"
+					render={(props) => <CanvasNew setartId={this.artId} {...props} {...this.state} />}
 				/>
     </div>
   );

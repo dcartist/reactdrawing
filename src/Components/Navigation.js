@@ -7,6 +7,7 @@ class Navigation extends Component {
                 <Link to="/" className="text-white">Home</Link>
                 <Link to="/list" className="text-white">ArtWork</Link>
                 <Link to="/canvas" className="text-white">Canvas</Link>
+                <a href="https://blog.drawingbytes.com/">Blog</a>
             </div>
         );
     }
