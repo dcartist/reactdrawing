@@ -143,6 +143,22 @@ export default function CanvasNew(props) {
 						}}
 					>
 						<Icon name="redo" />
+						<button
+						className="mr-4 disable-select"
+						onClick={() => {
+							canvas.current.eraseMode(true);
+						}}
+					>
+						<Icon name="eraser" size="large" />
+					</button>
+					<button
+						className="mr-4 disable-select"
+						onClick={() => {
+							canvas.current.eraseMode(false);
+						}}
+					>
+						<Icon name="pencil" size="large" />
+					</button>
 					</button>
             <button
 						className="ml-4 disable-select border p-2 border-black"
